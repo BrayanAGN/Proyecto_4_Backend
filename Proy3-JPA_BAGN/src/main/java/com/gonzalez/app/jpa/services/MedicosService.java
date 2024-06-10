@@ -1,14 +1,18 @@
 package com.gonzalez.app.jpa.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.gonzalez.app.jpa.dao.IMedicosDao;
+import com.gonzalez.app.jpa.enums.Especialidades;
+import com.gonzalez.app.jpa.enums.Genero;
 import com.gonzalez.app.jpa.models.Medicos;
 
 @Component
@@ -44,4 +48,16 @@ public class MedicosService implements IService<Medicos, Medicos>{
 		// TODO Auto-generated method stub
 		this.medicosDao.deleteById(id);
 	}
+	
+	public List<String> obtenerGenero() {
+        return Arrays.stream(Genero.values())
+                     .map(Genero::name)
+                     .collect(Collectors.toList());
+    }
+	public List<String> obtenerEspecialidad() {
+        return Arrays.stream(Especialidades.values())
+                     .map(Especialidades::name)
+                     .collect(Collectors.toList());
+    }
+
 }

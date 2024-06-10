@@ -28,7 +28,7 @@ public class Medicos {
 	 @Column(name = "Nombre")
 	 private String nombre;
 	    
-	 @Column(name = "Especialidad")
+	 @Column(name = "Especialidad", length = 10)
 	 private Especialidades especialidad;
 	 
 	 @Column(name = "Genero")

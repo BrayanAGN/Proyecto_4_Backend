@@ -73,4 +73,9 @@ public class PacientesController {
             throw new RuntimeException("El paciente con ID " + id + " no existe en la base de datos");
         }
     }
+    
+    @GetMapping("/genero")
+    public List<String> obtenerCategorias() {
+        return ((PacientesService) pacientesService).obtenerGenero();
+    }
 }

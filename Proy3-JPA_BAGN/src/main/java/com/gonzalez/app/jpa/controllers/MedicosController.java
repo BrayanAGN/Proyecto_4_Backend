@@ -73,4 +73,14 @@ public class MedicosController {
             throw new RuntimeException("El médico con ID " + id + " no existe en la base de datos");
         }
     }
+    
+    @GetMapping("/genero")
+    public List<String> obtenerGenero() {
+        return ((MedicosService) medicosService).obtenerGenero();
+    }
+    
+    @GetMapping("/especialidad")
+    public List<String> obtenerEspecialidad() {
+        return ((MedicosService) medicosService).obtenerEspecialidad();
+    }
 }
