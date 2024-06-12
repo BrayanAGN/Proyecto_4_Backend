@@ -1,6 +1,7 @@
 package com.gonzalez.app.jpa.models;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.gonzalez.app.jpa.enums.Genero;
 
@@ -9,6 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -36,6 +40,12 @@ public class Pacientes {
     
     @Column(name = "Correo_Electronico")
     private String correoElectronico;
+    
+    @OneToMany(mappedBy = "paciente")
+    private List<Habitaciones> habitaciones;
+
+    @Column(name = "id_habitacion")
+    private Long idHabitacion;
 
 	public Long getId() {
 		return id;
@@ -84,6 +94,22 @@ public class Pacientes {
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
 	}
-    
-    
+
+	public List<Habitaciones> getHabitaciones() {
+		return habitaciones;
+	}
+
+	public void setHabitaciones(List<Habitaciones> habitaciones) {
+		this.habitaciones = habitaciones;
+	}
+
+	public Long getIdHabitacion() {
+		return idHabitacion;
+	}
+
+	public void setIdHabitacion(Long idHabitacion) {
+		this.idHabitacion = idHabitacion;
+	}
+
+	
 }

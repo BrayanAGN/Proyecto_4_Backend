@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.gonzalez.app.jpa.dao.IHabitacionesDao;
 import com.gonzalez.app.jpa.dao.IPacientesDao;
+import com.gonzalez.app.jpa.enums.EstadoHabitacion;
 import com.gonzalez.app.jpa.enums.Genero;
+import com.gonzalez.app.jpa.models.Habitaciones;
 import com.gonzalez.app.jpa.models.Pacientes;
 
 @Component
@@ -20,6 +23,9 @@ public class PacientesService implements IService<Pacientes, Pacientes>{
 	
 	@Autowired
 	private IPacientesDao pacientesDao;
+	
+	@Autowired
+	private IHabitacionesDao habitacionesDao;
 	
 	@Override
 	public List<Pacientes> listar() {
@@ -53,4 +59,6 @@ public class PacientesService implements IService<Pacientes, Pacientes>{
                      .map(Genero::name)
                      .collect(Collectors.toList());
     }
+	
+	
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gonzalez.app.jpa.models.HistorialMedico;
+import com.gonzalez.app.jpa.models.Pacientes;
 import com.gonzalez.app.jpa.services.HistorialMedicoService;
+import com.gonzalez.app.jpa.services.PacientesService;
 
 @RestController
 @RequestMapping("/api/historial")
@@ -29,6 +32,9 @@ public class HistorialMedicoController {
 	@Autowired
     @Qualifier("ram8gb")
     private HistorialMedicoService historialMedicoService;
+	
+	 @Autowired
+	 private PacientesService pacientesService;
 
     @PostMapping
     public Map<String, String> guardarHistorialMedico(@RequestBody HistorialMedico historialMedico) {
@@ -52,12 +58,20 @@ public class HistorialMedicoController {
     }
 
     @GetMapping("/obtener/{id}")
-    public HistorialMedico obtenerHistorialMedicoPorId(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Map<String, Object>> obtenerHistorialMedico(@PathVariable(name = "id") Long id) {
         Optional<HistorialMedico> historialMedico = historialMedicoService.getById(id);
-        if (!historialMedico.isPresent()) {
-            return null;
+        if (historialMedico.isPresent()) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("historial", historialMedico.get());
+            // Obtener el nombre del paciente asociado con este historial médico
+            Optional<Pacientes> paciente = pacientesService.getById(historialMedico.get().getPaciente().getId());
+            if (paciente.isPresent()) {
+                response.put("nombrePaciente", paciente.get().getNombre());
+            }
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return historialMedico.get();
     }
 
     @PutMapping("/actualizar/{id}")

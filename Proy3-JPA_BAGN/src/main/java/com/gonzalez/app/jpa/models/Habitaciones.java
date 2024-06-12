@@ -3,6 +3,7 @@ package com.gonzalez.app.jpa.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.gonzalez.app.jpa.enums.EstadoHabitacion;
 import com.gonzalez.app.jpa.enums.THabitaciones;
 
 import jakarta.persistence.Column;
@@ -34,15 +35,11 @@ public class Habitaciones {
     private THabitaciones  tipoHabitacion;
     
     @Column(name = "Estado")
-    private Integer estado;
+    private EstadoHabitacion estado;
     
-    @ManyToMany
-    @JoinTable(
-        name = "Pacientes_Habitaciones",
-        joinColumns = @JoinColumn(name = "habitacion_id"),
-        inverseJoinColumns = @JoinColumn(name = "paciente_id")
-    )
-    private Set<Pacientes> pacientes = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Pacientes paciente;
 
 	public Long getId() {
 		return id;
@@ -68,21 +65,21 @@ public class Habitaciones {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 
-	public Integer getEstado() {
+	public EstadoHabitacion getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Integer estado) {
+	public void setEstado(EstadoHabitacion estado) {
 		this.estado = estado;
 	}
 
-	public Set<Pacientes> getPacientes() {
-		return pacientes;
+	public Pacientes getPaciente() {
+		return paciente;
 	}
 
-	public void setPacientes(Set<Pacientes> pacientes) {
-		this.pacientes = pacientes;
+	public void setPaciente(Pacientes paciente) {
+		this.paciente = paciente;
 	}
-    
-    
+
+	
 }

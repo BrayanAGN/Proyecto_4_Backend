@@ -1,14 +1,19 @@
 package com.gonzalez.app.jpa.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.gonzalez.app.jpa.dao.IHabitacionesDao;
+import com.gonzalez.app.jpa.enums.EstadoHabitacion;
+import com.gonzalez.app.jpa.enums.Genero;
+import com.gonzalez.app.jpa.enums.THabitaciones;
 import com.gonzalez.app.jpa.models.Habitaciones;
 
 @Component
@@ -44,4 +49,20 @@ public class HabitacionesService implements IService<Habitaciones, Habitaciones>
 		// TODO Auto-generated method stub
 		this.habitacionesDao.deleteById(id);
 	}
+	
+	public List<Habitaciones> obtenerHabitacionesDisponibles() {
+        return habitacionesDao.findHabitacionesDisponibles(EstadoHabitacion.DISPONIBLE);
+    }
+	
+	public List<String> obtenerTipo() {
+        return Arrays.stream(THabitaciones.values())
+                     .map(THabitaciones::name)
+                     .collect(Collectors.toList());
+    }
+	
+	public List<String> obtenerEstado() {
+        return Arrays.stream(EstadoHabitacion.values())
+                     .map(EstadoHabitacion::name)
+                     .collect(Collectors.toList());
+    }
 }

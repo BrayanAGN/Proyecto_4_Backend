@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gonzalez.app.jpa.models.Habitaciones;
 import com.gonzalez.app.jpa.models.Pacientes;
 import com.gonzalez.app.jpa.services.PacientesService;
 
@@ -25,6 +26,7 @@ import com.gonzalez.app.jpa.services.PacientesService;
 @RequestMapping("/api/pacientes")
 @CrossOrigin(origins = "*") // Dar acceso a cualquier origen se puede poner en un acceso en especifico
 public class PacientesController {
+	
 	
 	@Autowired
     @Qualifier("ram12gb")
@@ -78,4 +80,5 @@ public class PacientesController {
     public List<String> obtenerCategorias() {
         return ((PacientesService) pacientesService).obtenerGenero();
     }
-}
+    
+}   
